@@ -60,7 +60,7 @@ function Sparkline({ values }: { values: number[] }) {
     })
     .join(' ')
   return (
-    <svg className="spark" viewBox={`0 0 ${width} ${height}`} role="img" aria-label="Context size by LLM call">
+    <svg className="spark" viewBox={`0 0 ${width} ${height}`} role="img" aria-label="Logical prompt tokens by LLM call">
       <polyline points={points} fill="none" stroke="currentColor" strokeWidth="3" vectorEffect="non-scaling-stroke" />
     </svg>
   )
@@ -166,9 +166,9 @@ function App() {
             <Metric label="Cache hit" value={fmtPct(cache.cacheHitPercent)} provenance="Derived" />
             <Metric label="CAF" value={cache.caf === undefined ? '—' : `${cache.caf.toFixed(1)}×`} provenance="Derived" hint="Logical prompt / new input" />
             <Metric label="Cache write" value={fmtInt(cache.cacheWrite)} provenance="Provider" hint="N/A when provider does not report it" />
-            <Metric label="Context P50" value={fmtInt(context.p50)} provenance="Provider" hint="Explicit contextSize only" />
-            <Metric label="Context P95" value={fmtInt(context.p95)} provenance="Provider" />
-            <Metric label="Context max" value={fmtInt(context.max)} provenance="Provider" />
+            <Metric label="Prompt P50" value={fmtInt(context.p50)} provenance="Provider" hint="Provider-reported logical prompt tokens" />
+            <Metric label="Prompt P95" value={fmtInt(context.p95)} provenance="Provider" />
+            <Metric label="Prompt max" value={fmtInt(context.max)} provenance="Provider" />
             <Metric label="LLM calls" value={fmtInt(stats.llmCallCount)} provenance="OpenFox" />
             <Metric label="Compactions" value={fmtInt(stats.events.compactionCount)} provenance="OpenFox" />
             <Metric label="Tool calls" value={fmtInt(stats.events.toolCalls)} provenance="OpenFox" />
@@ -179,8 +179,8 @@ function App() {
           <section className="panel">
             <div className="panel-title">
               <div>
-                <h2>Context progression</h2>
-                <p>Explicit context size by persisted LLM call. Prompt tokens are not substituted for missing context size.</p>
+                <h2>Logical prompt progression</h2>
+                <p>Provider-reported logical prompt tokens by persisted LLM call. OpenFox prefTokenIncrement is not used as cache evidence.</p>
               </div>
               <span>{context.values.length}/{stats.callDataPoints.length} calls</span>
             </div>
