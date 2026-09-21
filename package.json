@@ -1,0 +1,42 @@
+{
+  "name": "openfox-observability-plugin",
+  "version": "0.1.0",
+  "description": "Session observability dashboard for OpenFox: provider cache, context, compactions, tools and retries.",
+  "type": "module",
+  "main": "./dist/plugin.js",
+  "files": [
+    "dist"
+  ],
+  "openfox": {
+    "apiVersion": 2,
+    "entry": "./dist/plugin.js",
+    "displayName": "Observability",
+    "description": "Inspect provider cache usage, context growth, compactions, retries, tools and sub-agents for the active session.",
+    "capabilities": [
+      "ui",
+      "assets"
+    ],
+    "timeoutMs": 15000
+  },
+  "scripts": {
+    "build": "node build.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "check": "npm run typecheck && npm test && npm run build"
+  },
+  "dependencies": {
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.10",
+    "@types/react-dom": "^19.1.7",
+    "esbuild": "^0.25.9",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "license": "MIT"
+}
