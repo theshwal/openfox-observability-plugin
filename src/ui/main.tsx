@@ -229,7 +229,7 @@ function App() {
               <table>
                 <thead>
                   <tr>
-                    <th>#</th><th>Model</th><th>Context</th><th>Prompt</th><th>Cache read</th><th>New</th><th>Hit</th><th>TTFT</th><th>Prefill</th><th>Gen</th><th>Source</th>
+                    <th>#</th><th>Model</th><th>Prompt</th><th>Cache read</th><th>New</th><th>Hit</th><th>TTFT</th><th>Prefill</th><th>Gen</th><th>Source</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -240,7 +240,6 @@ function App() {
                       <tr key={`${call.messageId}:${call.sessionCallIndex}`}>
                         <td>{call.sessionCallIndex}</td>
                         <td><strong>{call.model}</strong><small>{call.providerName}</small></td>
-                        <td>{fmtInt(call.contextSize)}</td>
                         <td>{fmtInt(call.promptTokens)}</td>
                         <td>{providerKnown ? fmtInt(call.cachedPromptTokens) : '—'}</td>
                         <td>{fmtInt(fresh)}</td>
