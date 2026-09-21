@@ -83,11 +83,11 @@ describe('observability metrics', () => {
     expect(result.completeProviderCoverage).toBe(true)
   })
 
-  it('uses explicit contextSize only for context percentiles', () => {
+  it('uses provider-reported logical prompt tokens for prompt percentiles', () => {
     const result = computeContextMetrics(stats())
-    expect(result.p50).toBe(100)
-    expect(result.p95).toBe(200)
-    expect(result.max).toBe(200)
+    expect(result.p50).toBe(50)
+    expect(result.p95).toBe(100)
+    expect(result.max).toBe(100)
   })
 
   it('marks provider cache coverage partial when a call has no provider cache attribution', () => {
@@ -99,5 +99,7 @@ describe('observability metrics', () => {
     expect(result.completeProviderCoverage).toBe(false)
     expect(result.cacheRead).toBe(90)
     expect(result.newInput).toBe(10)
+    // CAF uses only the provider-attributed population: 100 / 10.
+    expect(result.caf).toBe(10)
   })
 })
