@@ -1,0 +1,60 @@
+:root {
+  color-scheme: dark;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #0b0d12;
+  color: #e8ebf2;
+  font-synthesis: none;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: #0b0d12; color: #e8ebf2; }
+button { font: inherit; }
+.shell { padding: 24px; max-width: 1600px; margin: 0 auto; }
+header { display: flex; justify-content: space-between; gap: 24px; align-items: flex-start; margin-bottom: 20px; }
+h1 { margin: 2px 0 4px; font-size: 28px; letter-spacing: -0.03em; }
+h2 { margin: 0; font-size: 15px; }
+p { margin: 0; }
+.eyebrow { color: #7d8799; font-size: 11px; letter-spacing: .16em; font-weight: 700; }
+.session { color: #7d8799; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; }
+.actions { display: flex; gap: 8px; align-items: center; }
+.updated { color: #727b8b; font-size: 12px; margin-right: 8px; }
+button { border: 1px solid #2a303c; color: #dfe4ee; background: #171b23; padding: 8px 12px; border-radius: 7px; cursor: pointer; }
+button:hover { background: #1f2530; }
+button:disabled { opacity: .5; cursor: default; }
+button.primary { background: #375dfb; border-color: #375dfb; color: white; }
+.metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(165px, 1fr)); gap: 10px; margin-bottom: 14px; }
+.metric, .panel { border: 1px solid #202632; background: #11151c; border-radius: 10px; }
+.metric { padding: 13px; min-height: 104px; }
+.metric-top { display: flex; justify-content: space-between; gap: 8px; align-items: center; color: #9ba5b5; font-size: 11px; }
+.metric strong { display: block; margin-top: 13px; font-size: 22px; letter-spacing: -0.025em; }
+.metric small { display: block; margin-top: 6px; color: #697384; font-size: 10px; line-height: 1.3; }
+.prov { display: inline-flex; align-items: center; border: 1px solid; border-radius: 999px; padding: 2px 6px; font-size: 9px; text-transform: uppercase; letter-spacing: .06em; }
+.prov-provider { color: #55d6be; border-color: #245e56; background: #112d29; }
+.prov-derived { color: #8bb4ff; border-color: #2e4f88; background: #13233d; }
+.prov-openfox { color: #b1a5ff; border-color: #4b4281; background: #211d3b; }
+.panel { padding: 16px; margin-bottom: 14px; }
+.panel-title { display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; margin-bottom: 14px; }
+.panel-title p, .panel-title > span { color: #7d8799; font-size: 11px; margin-top: 4px; }
+.spark { width: 100%; height: 220px; color: #6688ff; background: linear-gradient(180deg, rgba(55,93,251,.08), transparent); border-radius: 7px; }
+.empty-chart, .empty, .loading { color: #7d8799; padding: 34px 10px; text-align: center; }
+.grid-two { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.activity-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+.activity-grid > div { padding: 12px; background: #0d1117; border-radius: 7px; }
+.activity-grid span { display: block; color: #7d8799; font-size: 11px; }
+.activity-grid strong { display: block; margin-top: 5px; font-size: 20px; }
+.callout { display: flex; gap: 8px; align-items: baseline; padding: 12px 14px; border-radius: 8px; margin-bottom: 14px; font-size: 12px; }
+.callout.warn { border: 1px solid #5d4c1d; background: #2b240f; color: #e9ca66; }
+.callout.error { border: 1px solid #693035; background: #2f171a; color: #ff9aa2; }
+.inline-note { margin-top: 12px; padding: 9px 10px; border-radius: 6px; background: #211d12; color: #d5bd74; font-size: 11px; }
+.table-wrap { overflow: auto; max-height: 430px; }
+table { width: 100%; border-collapse: collapse; font-size: 11px; }
+th { text-align: left; color: #737d8d; font-weight: 600; position: sticky; top: 0; background: #11151c; }
+th, td { padding: 8px 9px; border-bottom: 1px solid #1d232d; white-space: nowrap; }
+td { color: #c7cfdb; }
+td strong { display: block; color: #e8ebf2; }
+td small { display: block; color: #6f7989; margin-top: 2px; }
+@media (max-width: 900px) {
+  .shell { padding: 14px; }
+  header { flex-direction: column; }
+  .actions { flex-wrap: wrap; }
+  .grid-two { grid-template-columns: 1fr; }
+}
