@@ -4,10 +4,24 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>OpenFox Observability</title>
-    <link rel="stylesheet" href="ui.css" />
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="ui.js"></script>
+    <script>
+      (() => {
+        const token = new URLSearchParams(window.location.search).get('token')
+        const suffix = token ? '?token=' + encodeURIComponent(token) : ''
+
+        const stylesheet = document.createElement('link')
+        stylesheet.rel = 'stylesheet'
+        stylesheet.href = 'ui.css' + suffix
+        document.head.appendChild(stylesheet)
+
+        const app = document.createElement('script')
+        app.type = 'module'
+        app.src = 'ui.js' + suffix
+        document.body.appendChild(app)
+      })()
+    </script>
   </body>
 </html>
