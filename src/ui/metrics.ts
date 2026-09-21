@@ -54,7 +54,10 @@ export function computeCacheMetrics(stats: SessionStats): CacheMetrics {
   const completeProviderCoverage = totalCalls > 0 && providerKnownCalls === totalCalls
   const cacheHitPercent = knownPrompt > 0 ? (cacheRead / knownPrompt) * 100 : undefined
   const newInput = providerKnownCalls > 0 ? knownNew : undefined
-  const caf = newInput && newInput > 0 ? logicalPrompt / newInput : undefined
+  // CAF must use the same provider-attributed population in numerator and
+  // denominator. Using all logical prompt tokens with only known fresh-input
+  // tokens would overstate amplification when cache coverage is partial.
+  const caf = newInput && newInput > 0 ? knownPrompt / newInput : undefined
 
   return {
     logicalPrompt: logicalPrompt || stats.prefillTokens || 0,
@@ -76,8 +79,11 @@ function percentile(sorted: number[], p: number): number | undefined {
 }
 
 export function computeContextMetrics(stats: SessionStats): ContextMetrics {
+  // Provider-reported promptTokens are the stable logical prompt/context
+  // population available for every persisted LLM call. Do not substitute
+  // OpenFox's prefTokenIncrement (fresh-processing heuristic).
   const values = (stats.callDataPoints ?? [])
-    .map((call) => call.contextSize)
+    .map((call) => call.promptTokens)
     .filter((value): value is number => typeof value === 'number' && Number.isFinite(value) && value >= 0)
   const sorted = [...values].sort((a, b) => a - b)
   return {
