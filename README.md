@@ -6,7 +6,7 @@ The plugin adds an **Observability** action to the session header and opens a fu
 
 - provider-reported prompt cache reads and cache writes
 - derived new-input tokens, cache hit ratio and context amplification factor (CAF)
-- explicit per-call context size (P50 / P95 / max)
+- provider-reported logical prompt size (P50 / P95 / max)
 - LLM call progression
 - compactions, retries, tool calls, tool errors and sub-agent activity
 - tool breakdown
@@ -16,7 +16,7 @@ The plugin adds an **Observability** action to the session header and opens a fu
 
 The dashboard deliberately separates three classes of data:
 
-- **Provider** — returned by the LLM provider, e.g. prompt tokens, cached prompt tokens, cache writes and explicit context size.
+- **Provider** — returned by the LLM provider, e.g. prompt tokens, cached prompt tokens and cache writes.
 - **Derived** — computed only from provider-reported fields, e.g. cache hit ratio, new input and CAF.
 - **OpenFox** — persisted runtime events, e.g. tools, compactions, retries and sub-agents.
 
@@ -24,12 +24,15 @@ Missing provider cache values are displayed as unavailable. They are never conve
 
 ## Host requirements
 
-This plugin expects the OpenFox observability foundation currently developed in:
+This plugin now has a **single OpenFox host dependency**: the consolidated session-observability bridge in `theshwal/openfox` PR #15.
 
-- `theshwal/openfox` PR #8 — provider cache/context fields and historical session event rollup
-- `theshwal/openfox` PR #9 — preserves session context when opening iframe plugin panels
+That bridge contains the OpenFox-only capabilities the plugin cannot reconstruct itself:
 
-The panel requires `sessionId` in its iframe query string. Without PR #9 (or equivalent upstream support), the dashboard shows a clear "No session context received" message rather than guessing the active session.
+- provider-reported cache attribution preserved through the LLM/stat pipeline
+- persisted session activity/history in `GET /api/sessions/:id/stats`
+- `sessionId`, `projectId` and `workdir` propagation when an iframe plugin panel is opened
+
+The dashboard itself, its calculations and all presentation logic remain in this repository. The plugin never reads OpenFox's SQLite database directly.
 
 ## Install from GitHub
 
@@ -75,7 +78,7 @@ sandboxed iframe
         ▼
 GET /api/sessions/:sessionId/stats
         │
-        ├── provider cache/context call data
+        ├── provider cache / logical prompt call data
         └── OpenFox persisted event rollup
 ```
 
